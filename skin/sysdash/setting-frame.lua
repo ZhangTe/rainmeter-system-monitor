@@ -14,12 +14,21 @@
 
 setting_value = {};
 setting_path = "settings.cfg";
+log_path = "update.log"
 function Initialize()
 	setting_path = (SKIN:GetVariable('CURRENTPATH')..setting_path);
+	log_path = (SKIN:GetVariable('CURRENTPATH')..log_path);
 	ReadIni();
 	for key, val in pairs(setting_value) do
 		SKIN:Bang("!SetVariable \"" .. key .. "\" \"" .. val .. "\"")
 	end
+	logging(os.date("\n%Y-%m-%d%H:%M:%S",time_) .. ">> Rainmeter Max Counter Start...")
+end
+
+function logging(str)
+	local logfile = io.open(log_path, "a")
+	logfile:write(str)
+	logfile:close(logfile)
 end
 
 function updatevalue(argName, Value)
@@ -29,12 +38,15 @@ function updatevalue(argName, Value)
 	for key, val in pairs(setting_value) do
 		write_str =  (key .. "=" .. val) .. "\n" .. write_str
 	end
-	local file = io.open(setting_path, "w")
-	file:write(write_str)
-	file:close(file)
+	local X = io.open(setting_path, "w")
+	X:write(write_str)
+	X:close(X)
 	
 	SKIN:Bang("!SetVariable \"" .. argName .. "\" \"" .. Value .. "\"")
 	SKIN:Bang("!Redraw")
+	
+	logging(os.date("\n%Y-%m-%d %H:%M:%S",time_) .. ">>   " .. argName .. " = " ..Value)
+	
 end
 
 function updateIfBigger(argName, Value)
