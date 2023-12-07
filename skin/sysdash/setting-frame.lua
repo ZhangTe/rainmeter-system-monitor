@@ -22,7 +22,7 @@ function Initialize()
 	for key, val in pairs(setting_value) do
 		SKIN:Bang("!SetVariable \"" .. key .. "\" \"" .. val .. "\"")
 	end
-	logging(os.date("\n%Y-%m-%d%H:%M:%S",time_) .. ">> Rainmeter Max Counter Start...")
+	-- logging(os.date("\n%Y-%m-%d%H:%M:%S",time_) .. ">> Rainmeter Max Counter Start...")
 end
 
 function logging(str)
